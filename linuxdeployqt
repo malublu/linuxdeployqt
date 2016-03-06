@@ -1,1 +1,6 @@
-
+#!/bin/bash
+if [ ! -f "$1" ] ; then
+        echo "missing file argument: linuxdeployqt <binfile>"
+        exit 0
+fi
+ldd $1 | grep "=> /" | grep "Qt5" | awk '{print $3}' |  while read a; do yes | cp -rf $a ./$(basename $a); done
